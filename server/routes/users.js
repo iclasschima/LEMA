@@ -19,7 +19,6 @@ router.get("/", (req, res) => {
             SELECT
                 u.id,
                 u.name,
-                u.username,
                 u.email,
                 u.phone,
                 a.street,
@@ -38,7 +37,6 @@ router.get("/", (req, res) => {
       const formattedUsers = rows.map((row) => ({
         id: row.id,
         name: row.name,
-        username: row.username,
         email: row.email,
         phone: row.phone,
         website: row.website,
