@@ -5,7 +5,7 @@ import fs from "fs";
 
 let dbInstance: Database | null = null;
 
-const DEFAULT_DB_PATH = path.resolve(__dirname, "data.db");
+const DEFAULT_DB_PATH = path.resolve(__dirname, "../data.db");
 
 export const getDb = (customDbPath?: string): Promise<Database> => {
   return new Promise((resolve, reject) => {
