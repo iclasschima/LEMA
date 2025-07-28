@@ -15,13 +15,6 @@ This repository contains a full-stack application, comprising a React frontend a
    - [Start Backend](#start-backend)
    - [Start Frontend](#start-frontend)
 6. [API Usage](#api-usage)
-7. [Testing](#testing)
-8. [Deployment](#deployment)
-   - [Frontend Deployment](#frontend-deployment)
-   - [Backend Deployment](#backend-deployment)
-9. [Code Style and Formatting](#code-style-and-formatting)
-10. [Contributing](#contributing)
-11. [License](#license)
 
 ---
 
