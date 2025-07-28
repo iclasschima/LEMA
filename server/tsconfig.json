@@ -10,7 +10,7 @@
       "types": ["jest"]
     },
     "rootDir": "./",             
-    "outDir": "./dist",
+    "outDir": "./",
   }
 
   
