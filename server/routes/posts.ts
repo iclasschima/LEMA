@@ -32,7 +32,7 @@ router.get("/users/:userId/posts", async (req: Request, res: Response) => {
                     SELECT id, user_id AS userId, title, body
                     FROM posts
                     WHERE user_id = ?
-                    ORDER BY id DESC
+                    ORDER BY created_at DESC
                     LIMIT ? OFFSET ?
                 `,
             [userId, limit, offset],
