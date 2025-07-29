@@ -9,7 +9,7 @@ import PostListItem from "@/app/components/PostListItem";
 import { toast } from "react-toastify";
 import { BsArrowLeft } from "react-icons/bs";
 
-import { FaPlus } from "react-icons/fa";
+import { FiPlusCircle } from "react-icons/fi";
 import NewPostModal from "@/app/components/NewPostModal";
 
 const UserPostsPage: React.FC = () => {
@@ -32,29 +32,7 @@ const UserPostsPage: React.FC = () => {
     error: postsError,
   } = useUserPosts(userId, page, postsLimit);
 
-  const deletePostMutation = useDeletePost();
   const createPostMutation = useCreatePost();
-
-  const handleDeletePost = async (postId: number) => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this post? This action cannot be undone."
-      )
-    ) {
-      deletePostMutation
-        .mutateAsync(postId)
-        .then(() => {
-          toast.success("Post deleted successfully!");
-        })
-        .catch((error) => {
-          toast.error(
-            `Failed to delete post: ${
-              (error as Error).message || "Unknown error"
-            }`
-          );
-        });
-    }
-  };
 
   const handlePublishPost = (title: string, content: string) => {
     createPostMutation
@@ -79,7 +57,7 @@ const UserPostsPage: React.FC = () => {
     );
 
   return (
-    <div className="container mx-auto p-4 sm:p-8 min-h-screen max-w-[1200px]">
+    <div className="container mx-auto p-4 sm:p-8 min-h-screen max-w-[900px]">
       <div className="mb-8">
         <button
           onClick={() => router.back()}
@@ -97,40 +75,25 @@ const UserPostsPage: React.FC = () => {
         </p>
       </div>
 
-      {postsData?.data && postsData.data.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div
-            onClick={() => setShowModal(true)}
-            className="bg-white rounded-lg border-dashed h-full  p-6 flex flex-col items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border border-gray-200"
-          >
-            <FaPlus className="w-8 h-8 mb-3" />
-            <span className="text-lg font-medium">New Post</span>
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div
+          onClick={() => setShowModal(true)}
+          className="bg-white rounded-lg border-dashed border-2 h-[293px] w-[270px] p-6 flex flex-col items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border-gray-200"
+        >
+          <FiPlusCircle className="w-5 h-5 mb-2" />
+          <span className="text-sm text-[#717680] font-medium">New Post</span>
+        </div>
 
-          {postsData.data.map((post) => (
-            <PostListItem
-              key={post.id}
-              post={post}
-              onDelete={handleDeletePost}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors duration-200 cursor-pointer border border-gray-200 h-[220px]">
-            <FaPlus className="w-8 h-8 mb-3" />
-            <span className="text-lg font-medium">New Post</span>
-          </div>
-          <p className="col-span-full text-gray-600 text-lg text-center mt-10 p-6 bg-white rounded-lg shadow border border-gray-200">
-            No posts found for this user.
-          </p>
-        </div>
-      )}
+        {postsData?.data.map((post) => (
+          <PostListItem key={post.id} post={post} />
+        ))}
+      </div>
 
       {showModal && (
         <NewPostModal
           onClose={() => setShowModal(false)}
           onPublish={handlePublishPost}
+          isPublishing={createPostMutation.isPending}
         />
       )}
     </div>

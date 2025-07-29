@@ -111,7 +111,7 @@ const UserTable: React.FC<UserTableProps> = ({
               users.map((user) => (
                 <tr
                   key={user.id}
-                  className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer"
+                  className="hover:bg-blue-50 transition-colors duration-150 cursor-pointer h-[72px]"
                   onClick={() =>
                     router.push(
                       `/users/${user.id}/posts?name=${encodeURIComponent(

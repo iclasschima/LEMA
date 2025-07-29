@@ -3,16 +3,21 @@ import React, { useState } from "react";
 interface NewPostModalProps {
   onClose: () => void;
   onPublish: (title: string, content: string) => void;
+  isPublishing: boolean;
 }
 
-const NewPostModal: React.FC<NewPostModalProps> = ({ onClose, onPublish }) => {
+const NewPostModal: React.FC<NewPostModalProps> = ({
+  onClose,
+  onPublish,
+  isPublishing,
+}) => {
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [titleError, setTitleError] = useState("");
   const [contentError, setContentError] = useState("");
 
-  const MAX_TITLE_LENGTH = 100;
-  const MAX_CONTENT_LENGTH = 500;
+  const MAX_TITLE_LENGTH = 50;
+  const MAX_CONTENT_LENGTH = 250;
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
@@ -57,8 +62,11 @@ const NewPostModal: React.FC<NewPostModalProps> = ({ onClose, onPublish }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl transform transition-all duration-300 scale-100 opacity-100">
+    <div
+      className="fixed inset-0 flex items-center justify-center p-4 z-50"
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+    >
+      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl transform transition-all duration-400 scale-100 opacity-100">
         <div className="mb-6">
           <h2 className="text-4xl font-medium text-gray-900">New Post</h2>
         </div>
@@ -98,7 +106,7 @@ const NewPostModal: React.FC<NewPostModalProps> = ({ onClose, onPublish }) => {
           </label>
           <textarea
             id="postContent"
-            rows={8}
+            rows={6}
             className={`w-full p-3 border rounded-lg border-gray-300 focus:border-none focus:ring-2 focus:border-transparent transition duration-150 ease-in-out resize-y ${
               contentError ? "border-red-500" : ""
             }`}
@@ -124,9 +132,18 @@ const NewPostModal: React.FC<NewPostModalProps> = ({ onClose, onPublish }) => {
           </button>
           <button
             onClick={handlePublishClick}
-            className="px-6 py-3 bg-[#334155] text-white rounded-lg shadow-md hover:bg-blue-900 transition duration-200 cursor-pointer"
+            disabled={isPublishing || !postTitle.trim() || !postContent.trim()}
+            className="px-6 py-3 bg-[#334155] text-white rounded-lg shadow-md hover:bg-blue-900 transition duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           >
             Publish
+            {isPublishing && (
+              <div className="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )}
           </button>
         </div>
       </div>
